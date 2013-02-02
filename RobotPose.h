@@ -8,8 +8,8 @@ namespace RobotPose {
 		int getX();
 		int getY();
 	private:
-		int x_;
-	    int y_;
+	        int x_;
+	        int y_;
 	};
 
 }
