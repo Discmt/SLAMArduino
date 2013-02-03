@@ -2,6 +2,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include<Arduino.h>
+#include"Settings.h";
 
 namespace Logger {
   
@@ -14,8 +15,9 @@ namespace Logger {
   };
   
   enum LogComponent {
-	File = 0,
-        GlobalGrid = 1
+		File = 0,
+        GlobalGrid = 1,
+		Logging =2
   };
   
   /** A container for mapping a LogComponent to a setting value */
@@ -56,6 +58,12 @@ namespace Logger {
   /** Log a message on the serial communication monitor */
   void log(LogComponent component, LogLevel level, String title, String details);
 
+  /** Log a message and it's details on the serial communication monitor */
+  void log(LogComponent component, LogLevel level,String title, String details[], int numberOfDetails);
+
+  /** Slow down the Arduino for five seconds after a message has been sent */
+  void slowDown();
+
   /** Constructs a header with a new line */
   String buildHeader(LogComponent component, LogLevel level,String title);
   
@@ -64,7 +72,7 @@ namespace Logger {
 /** Container for file related methods */
 namespace LogUtil {
 
-  char * getCharArray(String s);
+  char * getCharArray(String s, int size);
   
 
 }
