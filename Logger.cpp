@@ -1,35 +1,39 @@
  #include"Logger.h";
 
-extern String Logger::slamLogStack = "";
-extern int Logger::slamStackCount = 0;
-extern int Logger::nest = 0;
+extern String Logger::slamLogStack_ = "";
+extern int Logger::slamStackCount_ = 0;
+extern int Logger::nestLevel_ = 0;
+extern Logger::LogSetting Logger::logSettings_[] = {
+                                           LogSetting(File, VERBOSE),
+                                           LogSetting(GlobalGrid, VERBOSE)
+                                            };
 
 void Logger::addNest() {
-  nest++;
+  nestLevel_++;
 }
 
 void Logger::removeNest() {
-  if(nest > 0) {
-    nest--;
+  if(nestLevel_ > 0) {
+    nestLevel_--;
   }
 }
 
 void Logger::clearMethodStack() {
-  slamLogStack = "";
-  slamStackCount = 0;
+  slamLogStack_ = "";
+  slamStackCount_ = 0;
 }
 
-void Logger::popOffMethodStack() {
-  if(slamStackCount == 1) 
+void Logger::popMethodStack() {
+  if(slamStackCount_ == 1) 
   {
     clearMethodStack();
   } 
-  else if(slamStackCount > 0 && slamLogStack != "") 
+  else if(slamStackCount_ > 0 && slamLogStack_ != "") 
   {
-    int i = slamLogStack.length()-1;
+    int i = slamLogStack_.length()-1;
     char c;
     do {
-        c = slamLogStack.charAt(i);
+        c = slamLogStack_.charAt(i);
         i--;
     } while (c != '\n' && i >= 0);
   }
@@ -37,34 +41,39 @@ void Logger::popOffMethodStack() {
 
 void Logger::pushMethodStack(String methodName) {
     if(methodName != "" && methodName != "\n") {
-      slamLogStack+=methodName;
-      slamLogStack+='\n';
-      slamStackCount++;
+      slamLogStack_+=methodName;
+      slamLogStack_+='\n';
+      slamStackCount_++;
     }
 }
 
-void Logger::log(LogComponent component, String title) {
-      log(component,title,"");
+void Logger::log(LogComponent component, LogLevel level, String title) {
+      log(component,level,title,"");
 }
 
 
-void Logger::log(LogComponent component, String title, String details) {
-    String header = buildHeader(component, title);;
+void Logger::log(LogComponent component, LogLevel level,String title, String details) {
     
-    if(header != "") {
-      Serial.print(header);
-    }
-    
-    if(details != "") {
-      Serial.println(details);
-    }
-    
-    if(slamStackCoint > 0) {
-      Serial.println(details);
+    if(logSettings_[component].level_ >= level) {
+        String header = buildHeader(component,level,title);;
+        
+        if(header != "") {
+          Serial.print(header);
+        }
+        
+        if(details != "") {
+          Serial.println(details);
+        }
+        
+        if(slamStackCount_ > 0 && logSettings_[component].level_ > 3) {
+          Serial.println("Method Stack: ");
+          Serial.println(slamLogStack_);
+          Serial.print("\n");
+        }
     }
 }
 
-String Logger::buildHeader(LogComponent component, String title) {
+String Logger::buildHeader(LogComponent component, LogLevel level, String title) {
         String header;
         header+="+++";
         unsigned long time = millis();
@@ -79,8 +88,10 @@ String Logger::buildHeader(LogComponent component, String title) {
 			  break;
         }
         header+="+++";
-	header+=' ';
 	header+=':';
+        header+=' ';
+        header+=level;
+        header+=' ';
         header+=title;
         header+=' ';
         header+=time;

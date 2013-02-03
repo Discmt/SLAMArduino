@@ -10,9 +10,9 @@
 
 namespace GlobalGrid {
 
-    const char GLOBAL_DIRECTORY[] = "GM";
-    const char GLOBAL_MAP_METADATA_FILE_NAME[] = "GM";
-    const char GlOBAL_MAP_FILE_NAME[] = "GMMAP";
+    const String GLOBAL_DIRECTORY = "/GM";
+    const String GLOBAL_MAP_METADATA_FILE_NAME ="/GM/GM";
+    const String GlOBAL_MAP_FILE_NAME = "/GM/GMMAP";
 
 	class GlobalGrid {
 	public:

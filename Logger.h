@@ -4,14 +4,36 @@
 #include<Arduino.h>
 
 namespace Logger {
-  enum LogComponent {
-	File = 1,
-        GlobalGrid = 2
+  
+  enum LogLevel {
+        WARNING = 1,
+        ERROR = 2,
+        INFO = 3,
+        DEBUG = 4,
+        VERBOSE = 5
   };
   
-  extern String slamLogStack;
-  extern int slamStackCount;
-  extern int nest;
+  enum LogComponent {
+	File = 0,
+        GlobalGrid = 1
+  };
+  
+  /** A container for mapping a LogComponent to a setting value */
+  struct LogSetting {
+        LogSetting(LogComponent component, LogLevel level) {component_ = component; level_ = level;};
+        
+        /** Log Component */
+        LogComponent component_;
+        
+        /** Log Level for corresponding component */
+        LogLevel level_;
+  };
+  
+  
+  extern LogSetting logSettings_[];
+  extern String slamLogStack_;
+  extern int slamStackCount_;
+  extern int nestLevel_;
   
   /** Add a logging nest */
   void addNest();
@@ -26,16 +48,16 @@ namespace Logger {
   void pushMethodStack(String methodName);
   
   /** Remove the top method from the method stack */
-  void popOffMethodStack();
+  void popMethodStack();
   
   /** Log a message on the serial communication monitor */
-  void log(LogComponent component, String title);
+  void log(LogComponent component, LogLevel level ,String title);
   
   /** Log a message on the serial communication monitor */
-  void log(LogComponent component, String title, String details);
+  void log(LogComponent component, LogLevel level, String title, String details);
 
   /** Constructs a header with a new line */
-  String buildHeader(LogComponent component, String title);
+  String buildHeader(LogComponent component, LogLevel level,String title);
   
 }
 
