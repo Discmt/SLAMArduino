@@ -10,10 +10,6 @@
 
 namespace GlobalGrid {
 
-    const String GLOBAL_DIRECTORY = "GM";
-    const String GLOBAL_MAP_METADATA_FILE_NAME ="GMETA";
-    const String GlOBAL_MAP_FILE_NAME = "GMMAP";
-
 	class GlobalGrid {
 	public:
 

@@ -16,19 +16,10 @@ void setup()
 		Logger::log(Logger::File, Logger::ERROR, "SD Card Initialization failed");
 		return;
 	}
-	//Logger::log(Logger::File, Logger::INFO, "SD Card Sucessfully Initialized");
+	Logger::log(Logger::File, Logger::INFO, "SD Card Sucessfully Initialized");
 
-	//GlobalGrid::GlobalGrid grid;
+	GlobalGrid::GlobalGrid grid;
 	Logger::popMethodStack();
-
-	char metaFilePathName[] = {"GM/GMAP"};
-
-	 File metaFile = SD.open(metaFilePathName);
-     //Logger::log(Logger::GlobalGrid, Logger::INFO, "Writing initialization data to meta file");
-     metaFile.write('G');
-     //metaFile.write("MAPFILENAME=GM/GMAP");
-     metaFile.flush();
-     metaFile.close(); 
 
 }
 

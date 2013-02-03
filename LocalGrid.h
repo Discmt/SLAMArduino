@@ -12,7 +12,16 @@ namespace LocalGrid {
 	const int BOTTOM = 7;
 	const int BOTTOM_RIGHT = 8;
 
-        class GridNode;
+    enum Color {
+		/** The node is unoccupied */
+		White,
+		/** The node is occupied */
+		Black,
+		/** It is unkown the whether or not the node is occupied */
+		Gray
+	};
+	
+	class GridNode;
 
 	/** The localGrid is simply an abstraction of the larger GlobalGrid */
 	class LocalGrid {
@@ -32,13 +41,13 @@ namespace LocalGrid {
 	class GridNode {
 	public:
               friend class LocalGrid;
-              GridNode() { isOccupied_ = false; };
+			  GridNode() { color_ = Gray; };
               GridNode(const GridNode &gSource);
-              bool isOccupied() { return isOccupied_; };
+              Color getColor() { return color_; };
               GridNode& operator=(const GridNode &rhs);
 	private:
-        protected:
-		bool isOccupied_;
+	protected:
+		Color color_;
 	};
 
 }

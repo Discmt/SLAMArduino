@@ -8,13 +8,12 @@ LocalGrid::LocalGrid::LocalGrid() {
 }
 
 LocalGrid::GridNode::GridNode(const GridNode &cSource) {
-  isOccupied_ = cSource.isOccupied_;
+  color_ = cSource.color_;
 }
 
 LocalGrid::GridNode& LocalGrid::GridNode::operator=(const GridNode &rhs) {
     // do the copy
-    isOccupied_ = rhs.isOccupied_;
- 
+    color_ = rhs.color_;
     // return the existing object
     return *this;
 }
