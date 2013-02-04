@@ -5,11 +5,19 @@ namespace RobotPose {
 
 	class RobotPose {
 	public:
-		int getX();
-		int getY();
+		/** Constructor for initial robot Pose */
+		RobotPose();
+
+		/** Constructor for robot pose */
+		RobotPose(double x, double y, double theta);
+
+		double getX() {return x_;};
+		double getY() {return y_;};
+		double getTheta(){return theta_;};
 	private:
-	        int x_;
-	        int y_;
+	        double x_;
+	        double y_;
+			double theta_;
 	};
 
 }

@@ -2,6 +2,7 @@
 #include"Logger.h";
 #include"GlobalGrid.h";
 
+
 void setup()
 {
 
@@ -16,10 +17,12 @@ void setup()
 		Logger::log(Logger::File, Logger::ERROR, "SD Card Initialization failed");
 		return;
 	}
-	Logger::log(Logger::File, Logger::INFO, "SD Card Sucessfully Initialized");
 
 	GlobalGrid::GlobalGrid grid;
-	Logger::popMethodStack();
+
+	Logger::log(Logger::File, Logger::INFO, "SD Card Sucessfully Initialized");
+
+
 
 }
 

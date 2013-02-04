@@ -17,7 +17,8 @@ namespace Logger {
   enum LogComponent {
 		File = 0,
         GlobalGrid = 1,
-		Logging =2
+		Logging = 2,
+		Robot = 3
   };
   
   /** A container for mapping a LogComponent to a setting value */
@@ -52,6 +53,15 @@ namespace Logger {
   /** Remove the top method from the method stack */
   void popMethodStack();
   
+  /** Is the component and log level log worthy */
+  bool isLoggable(LogComponent component, LogLevel level);
+
+  /** Log the header leaving it up to the user of the logging methods to log the footer */
+  void logHeader(LogComponent component, LogLevel level, String title);
+
+  /** Log the footer leaving it up the user of the logging methods to log the header */
+  void logFooter(LogComponent component, LogLevel level);
+
   /** Log a message on the serial communication monitor */
   void log(LogComponent component, LogLevel level ,String title);
   

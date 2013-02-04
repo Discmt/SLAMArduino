@@ -21,30 +21,46 @@ namespace LocalGrid {
 		Gray
 	};
 	
-	class GridNode;
+	class LocalGridNode;
 
 	/** The localGrid is simply an abstraction of the larger GlobalGrid */
 	class LocalGrid {
 	public:
-                //Instantiate a basic local grid with all nodes "unoccupied"
-                LocalGrid();
+        //Instantiate a basic local grid with all nodes "unoccupied", and center at (0,0)
+        LocalGrid();
+
+		//Instaniate a local grid with all nodes " unoccupied, and center at (x,y) 
+		LocalGrid(int x, int y);
+
+		/* return the center X of the local grid */
+		int getX() { return x_;};
+
+		/* return the center Y of the local grid */
+		int getY() { return y_;};
+
+		///* Return the nodes */
+		//LocalGridNode* getMap() {return map_;};
 
 		/* The size of the map array */
 		const static int MAP_SIZE = 9;
 
 	private:
+		//Center coordinates of the LocalGrid
+		int x_,y_;
+
+
 		/* Map of nodes */
-		GridNode * map_[MAP_SIZE];
+		LocalGridNode * map_[MAP_SIZE];
 	};
 
 	/** A Grid node that keeps track of whether or not is occupied and possibly other information as necessary */
-	class GridNode {
+	class LocalGridNode {
 	public:
               friend class LocalGrid;
-			  GridNode() { color_ = Gray; };
-              GridNode(const GridNode &gSource);
+			  LocalGridNode() { color_ = Gray; };
+              LocalGridNode(const LocalGridNode &gSource);
               Color getColor() { return color_; };
-              GridNode& operator=(const GridNode &rhs);
+              LocalGridNode& operator=(const LocalGridNode &rhs);
 	private:
 	protected:
 		Color color_;

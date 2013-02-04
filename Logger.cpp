@@ -6,7 +6,8 @@ extern int Logger::nestLevel_ = 0;
 extern Logger::LogSetting Logger::logSettings_[] = {
                                            LogSetting(File, VERBOSE),
                                            LogSetting(GlobalGrid, VERBOSE),
-										   LogSetting(Logging, WARNING)
+										   LogSetting(Logging, WARNING),
+										   LogSetting(Robot, VERBOSE)
                                             };
 
 void Logger::addNest() {
@@ -22,6 +23,10 @@ void Logger::removeNest() {
 void Logger::clearMethodStack() {
   slamLogStack_ = "";
   slamStackCount_ = 0;
+}
+
+bool Logger::isLoggable(LogComponent component, LogLevel level) {
+	return logSettings_[component].level_ >= level;
 }
 
 void Logger::popMethodStack() {
@@ -48,14 +53,35 @@ void Logger::pushMethodStack(String methodName) {
     }
 }
 
+void Logger::logHeader(LogComponent component, LogLevel level, String title) {
+	if(isLoggable(component,level)) {
+        String header = buildHeader(component,level,title);;
+        if(header != "") {
+          Serial.print(header);
+		}
+		slowDown();
+    }
+}
+
+void Logger::logFooter(LogComponent component, LogLevel level) {
+	//This could use some cleaning
+	if(isLoggable(component,level)) {
+		if(slamStackCount_ > 0 && logSettings_[component].level_ > 3) {
+			Serial.println("Method Stack: ");
+			Serial.println(slamLogStack_);
+			Serial.print("\n");
+        }
+		slowDown();
+    }
+}
+
 void Logger::log(LogComponent component, LogLevel level, String title) {
       log(component,level,title,"");
 }
 
 
 void Logger::log(LogComponent component, LogLevel level,String title, String details) {
-    
-    if(logSettings_[component].level_ >= level) {
+    if(isLoggable(component,level)) {
         String header = buildHeader(component,level,title);;
         
         if(header != "") {
@@ -79,7 +105,7 @@ void Logger::log(LogComponent component, LogLevel level,String title, String det
 }
 
 void Logger::log(LogComponent component, LogLevel level,String title, String details[], int numberOfDetails) {
-    if(logSettings_[component].level_ >= level) {
+    if(isLoggable(component,level)) {
         String header = buildHeader(component,level,title);;
         
         if(header != "") {
