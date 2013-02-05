@@ -7,11 +7,9 @@
 #include"RobotPose.h";
 #include"Settings.h";
 #include"Logger.h";
+#include"GridNode.h";
 
 namespace GlobalGrid {
-
-        void writeNumber(File file, int i);
-        void writeColor(File file, LocalGrid::Color i, bool addComma);
 
 	class GlobalGrid {
 	public:
@@ -26,19 +24,14 @@ namespace GlobalGrid {
 		/** Update the Global Grid using the local grid */
 		void update(LocalGrid::LocalGrid localGrid);    
 
-		/* Find the position of the node on the grid */
-		int findPositionOfGridNode(int x, int y);
-
-		/** Write a node at the specified coordinates. If a node is currently there then overwrite. */
-		void writeNode(int x,int y, LocalGrid::Color color);
 
 
 	private:
        
-        int numberOfNodes_;
+              int numberOfNodes_;
        
-        /** Write a grid node. If a node currently exists than overwrite */ 
-        void writeNode(LocalGrid::GridNode gridNode);
+              /** Write a grid node. If a node currently exists than overwrite */ 
+              void writeNode(GridNode::GridNode * gridNode);
               
               
               

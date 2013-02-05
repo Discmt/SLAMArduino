@@ -22,6 +22,7 @@ void setup()
 	}
 	Logger::log(Logger::File, Logger::INFO, "SD Card Sucessfully Initialized");
         GlobalGrid::GlobalGrid globalGrid;
+
         //globalGrid.writeNode(0,0,LocalGrid::White);
 	//if(SD.exists("GMMETA.txt")){
 	//	SD.remove("GMMETA.txt");
@@ -95,8 +96,15 @@ void setup()
 		//Logger::popMethodStack();
 		//map.flush();
 		//map.close();
-	
-
+      Serial.println("Im in the loop!");
+      Serial.print('\n');
+      File map = SD.open("GMAP.txt", FILE_READ);
+      if(map) {
+        while(map.available() > 0) {
+          Serial.print(char(map.read()));
+        }
+      }
+      map.close();
 		
 
 }
@@ -142,7 +150,6 @@ void setup()
 
 void loop()
 {
-        Serial.println("Im in a loop!");
 
 
 }

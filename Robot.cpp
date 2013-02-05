@@ -15,7 +15,7 @@ Robot::Robot::Robot() {
 	Serial.print("\ny: ");
 	Serial.print(y, DEC);
 
-	localGrid_ = new LocalGrid::LocalGrid(0,0);
+	//localGrid_ = new LocalGrid::LocalGrid(0,0);
 
 	globalGrid_.update((*localGrid_));
 

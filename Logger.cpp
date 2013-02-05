@@ -6,8 +6,8 @@ extern int Logger::nestLevel_ = 0;
 extern Logger::LogSetting Logger::logSettings_[] = {
                                            LogSetting(File, VERBOSE),
                                            LogSetting(GlobalGrid, VERBOSE),
-										   LogSetting(Logging, WARNING),
-										   LogSetting(Robot, VERBOSE)
+                                           LogSetting(Logging, WARNING),
+		                           LogSetting(Robot, VERBOSE)
                                             };
 
 void Logger::addNest() {
