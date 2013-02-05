@@ -160,14 +160,7 @@ void Logger::slowDown() {
 	Logger::log(Logger::Logging, Logger::DEBUG, "Slow down called");
 	unsigned long time = millis();
 	unsigned long diff = 0;
-	do {
-		diff=(millis()-time);
-	} while (diff < 5000);
+	delay(Settings::Settings::TIME_DELAY);
 }
 
-char * LogUtil::getCharArray(String s, int size) {
-    if(s== "") return "";
-    char a[size+1];
-    s.toCharArray(a,size-1);
-    return a;
-}
+

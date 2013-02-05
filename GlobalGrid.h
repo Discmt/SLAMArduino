@@ -10,7 +10,8 @@
 
 namespace GlobalGrid {
 
-	class GlobalGridNode;
+        void writeNumber(File file, int i);
+        void writeColor(File file, LocalGrid::Color i, bool addComma);
 
 	class GlobalGrid {
 	public:
@@ -22,38 +23,25 @@ namespace GlobalGrid {
 		/** Get the LocalGrid for the specified RobotPose. The robot pose is considered to be the center. */
 		LocalGrid::LocalGrid getLocalGrid(RobotPose::RobotPose pose);
       
-	    /** Update the GlobalGrid using data from the localGrid */
-        void update(LocalGrid::LocalGrid localGrid);      
+		/** Update the Global Grid using the local grid */
+		void update(LocalGrid::LocalGrid localGrid);    
 
+		/* Find the position of the node on the grid */
+		int findPositionOfGridNode(int x, int y);
+
+		/** Write a node at the specified coordinates. If a node is currently there then overwrite. */
+		void writeNode(int x,int y, LocalGrid::Color color);
 
 
 	private:
-		
-
-		/** Return the position of the opening brace of the Grid node at specified coordinates, return "-1" if not found */
-		int findLinePositionOfGridNode(int x, int y);
-
-		int numberOfNodes;
-
-        /** Write a node at the specified coordinates. If a node is currently there then overwrite. */
-        void writeNode(int x,int y);
-               
-        /** Write a grid node. If a node currently exists than overwrite */ 
-        void writeNode(LocalGrid::LocalGridNode gridNode);
        
-
-
-	};
-
-	class GlobalGridNode {
-	public:
-		/* Instantiate a Global Grid Node from local Grid node */
-		GlobalGridNode(LocalGrid::LocalGridNode localGridNode);
-		/* Instantiate a Global Grid Node based on the liner it should be on within a file */
-		GlobalGridNode(int lineNumber);
-	private:
-		int lineNumber_;
-		bool isRecorded_;
+        int numberOfNodes_;
+       
+        /** Write a grid node. If a node currently exists than overwrite */ 
+        void writeNode(LocalGrid::GridNode gridNode);
+              
+              
+              
 	};
 
       

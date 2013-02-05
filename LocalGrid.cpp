@@ -1,30 +1,26 @@
 #include"LocalGrid.h";
 
 LocalGrid::LocalGrid::LocalGrid() {
-  x_ = 0; 
-  y_ = 0;
   for(int i = 0; i < MAP_SIZE;i++) {
-    LocalGridNode * node = new LocalGridNode();
+    GridNode * node = new GridNode();
     map_[i] = node; 
-  }
+  };
 }
 
-LocalGrid::LocalGrid::LocalGrid(int x, int y) {
-  x_ = x; 
-  y_ = y;
-  for(int i = 0; i < MAP_SIZE;i++) {
-    LocalGridNode * node = new LocalGridNode();
-    map_[i] = node; 
-  }
-}
-
-LocalGrid::LocalGridNode::LocalGridNode(const LocalGridNode &cSource) {
+LocalGrid::GridNode::GridNode(const GridNode &cSource) {
   color_ = cSource.color_;
 }
 
-LocalGrid::LocalGridNode& LocalGrid::LocalGridNode::operator=(const LocalGridNode &rhs) {
+LocalGrid::GridNode& LocalGrid::GridNode::operator=(const GridNode &rhs) {
     // do the copy
     color_ = rhs.color_;
     // return the existing object
     return *this;
+}
+
+LocalGrid::LocalGrid::~LocalGrid() {
+	for(int i = 0; i < MAP_SIZE;i++) {
+    GridNode * node =   map_[i];
+	delete node;
+  };
 }
